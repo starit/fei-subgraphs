@@ -1,5 +1,5 @@
 specVersion: 0.0.2
-description: Fei Protocol 
+description: Fei is a decentralized, scalable, and DeFi-native stablecoin protocol
 repository: 
 schema:
   file: ./schema.graphql

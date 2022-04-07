@@ -1,12 +1,12 @@
-# FEI Subgraph (TribeDAO Subgraph)
+# Fei Subgraph (TribeDAO Subgraph)
 
-[FEI Protocol](https://fei.money/) Fei is a decentralized, scalable, and DeFi-native stablecoin protocol
+[Fei Protocol](https://fei.money/) Fei is a decentralized, scalable, and DeFi-native stablecoin protocol
 
 This subgraph dynamically tracks related protocol data.
 
 **WIP**
 
-Right now we assume FEI=1 USD
+Right now we assume Fei=1 USD
 ## Running Locally
 
 Make sure to update package.json settings to point to your own graph account.
