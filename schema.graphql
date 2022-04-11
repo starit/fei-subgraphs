@@ -19,13 +19,28 @@ type TribalChief @entity {
   totalAllocPoint: BigInt!
 
   # Pools
-  # pools: [Pool!]! @derivedFrom(field: "owner")
+  pools: [Pool!]! @derivedFrom(field: "owner")
 
   # Pool count
   poolCount: BigInt!
 
+  # token Balance
+  tokenBalance: BigDecimal!
+
+  # token Age
+  tokenAge: BigDecimal!
+
+  # token Removed
+  tokenAgeRemoved: BigDecimal!
+
+  # token Deposited
+  tokenDeposited: BigDecimal!
+
+  # token Withdrawn
+  tokenWithdrawn: BigDecimal!
+
   # History
-  # history: [History!]! @derivedFrom(field: "owner")
+  history: [History!]! @derivedFrom(field: "owner")
 
   # Upated at
   updatedAt: BigInt!
@@ -37,6 +52,21 @@ type History @entity {
 
   # Owner (TribalChief, Pool, or User).
   owner: TribalChief!
+
+  # SLP Balance
+  tokenBalance: BigDecimal!
+
+  # SLP Age
+  tokenAge: BigDecimal!
+
+  # SLP Removed
+  tokenAgeRemoved: BigDecimal!
+
+  # SLP Deposited
+  tokenDeposited: BigDecimal!
+
+  # SLP Withdrawn
+  tokenWithdrawn: BigDecimal!
 
   # Timestamp
   timestamp: BigInt!
@@ -85,16 +115,16 @@ type Pool @entity {
   # Token Balance
   tokenBalance: BigDecimal!
 
-  # SLP Age
+  # token Age
   tokenAge: BigDecimal!
 
-  # SLP Removed
+  # token Removed
   tokenAgeRemoved: BigDecimal!
 
   # Token Deposited
   tokenDeposited: BigDecimal!
 
-  # SLP Withdrawn
+  # token Withdrawn
   tokenWithdrawn: BigDecimal!
 
   # Timestamp
@@ -126,19 +156,19 @@ type PoolHistory @entity {
   # Pool
   pool: Pool!
 
-  # SLP Balance
+  # token Balance
   tokenBalance: BigDecimal!
 
-  # SLP Age
+  # token Age
   tokenAge: BigDecimal!
 
-  # SLP Removed
+  # token Removed
   tokenAgeRemoved: BigDecimal!
 
-  # SLP Deposited
+  # token Deposited
   tokenDeposited: BigDecimal!
 
-  # SLP Withdrawn
+  # token Withdrawn
   tokenWithdrawn: BigDecimal!
 
   # User Count
@@ -175,9 +205,9 @@ type User @entity {
 
   # We do some fancy math here. Basically, any point in time, the amount of SUSHIs
   # entitled to a user but is pending to be distributed is:
-  # pending reward = (user.amount * pool.accSushiPerShare) - user.rewardDebt
+  # pending reward = (user.amount * pool.accTribePerShare) - user.rewardDebt
   # Whenever a user deposits or withdraws LP tokens to a pool. Here's what happens:
-  # 1. The pool's `accSushiPerShare` (and `lastRewardBlock`) gets updated.
+  # 1. The pool's `accTribePerShare` (and `lastRewardBlock`) gets updated.
   # 2. User receives the pending reward sent to his/her address.
   # 3. User's `amount` gets updated.
   # 4. User's `rewardDebt` gets updated.

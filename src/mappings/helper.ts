@@ -63,7 +63,7 @@ export const TRIBAL_CHIEF_ADDRESS = Address.fromString(
   '0x9e1076cC0d19F9B0b8019F384B0a29E48Ee46f7f'
 )
 
-// export const MASTER_CHEF_V2_ADDRESS = Address.fromString('0xef0881ec094552b2e128cf945ef17a6752b4ec5d')
+// export const TRIBAL_CHIEF_V2_ADDRESS = Address.fromString('0xef0881ec094552b2e128cf945ef17a6752b4ec5d')
 
 // export const SUSHI_BAR_ADDRESS = Address.fromString(
 //   '{{ sushi_bar_address }}{{^sushi_bar_address}}0x0000000000000000000000000000000000000000{{/sushi_bar_address}}'
