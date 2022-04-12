@@ -1,6 +1,15 @@
 import {
   Deposit,
   Withdraw,
+  TribeWithdraw,
+  EmergencyWithdraw,
+  Harvest,
+  LogSetPool,
+  NewTribePerBlock,
+  LogPoolAddition,
+  LogPoolMultiplier,
+  LogUpdatePool,
+  PoolLocked,
   TribalChief as TribalChiefContract
 } from '../types/TribalChief/TribalChief'
 import {
@@ -479,4 +488,73 @@ export function withdraw(event: Withdraw): void {
   poolHistory.tokenWithdrawn = poolHistory.tokenWithdrawn.plus(amount)
   poolHistory.userCount = pool.userCount
   poolHistory.save()
+}
+
+//  event LogSetPool(
+//         uint256 indexed pid,
+//         uint256 allocPoint,
+//         IRewarder indexed rewarder,
+//         bool overwrite
+//     );
+export function handlePoolSet(event: LogSetPool): void {
+  log.info('Set pool id: {} allocPoint: {} withUpdate: {}', [
+    event.params.pid.toString(),
+    event.params.allocPoint.toString(),
+    event.params.rewarder.toString(),
+    event.params.overwrite ? 'true' : 'false'
+  ])
+
+  const pool = getPool(event.params.pid, event.block)
+
+  const tribalChief = getTribalChief(event.block)
+
+  // // Update tribalchief
+  tribalChief.totalAllocPoint = tribalChief.totalAllocPoint.plus(event.params.allocPoint.minus(pool.allocPoint))
+  tribalChief.save()
+
+  // // Update pool
+  pool.allocPoint = event.params.allocPoint
+  pool.save()
+}
+
+// event EmergencyWithdraw(
+//         address indexed user,
+//         uint256 indexed pid,
+//         uint256 amount,
+//         address indexed to
+//     );
+export function handleEmergencyWithdraw(event: EmergencyWithdraw): void {
+  log.info('User {} emergancy withdrawal of {} from pool #{} to address {}', [
+    event.params.user.toHex(),
+    event.params.amount.toString(),
+    event.params.pid.toString(),
+    event.params.to.toString(),
+  ])
+
+  const pool = getPool(event.params.pid, event.block)
+
+  const stakedTokenContract = ERC20Contract.bind(pool.stakedToken as Address)
+  // Todo:: handle virtualTotalSupply
+  // pool.virtualTotalSupply = pool.virtualTotalSupply.minus()
+  pool.balance = stakedTokenContract.balanceOf(TRIBAL_CHIEF_ADDRESS)
+  pool.save()
+
+  // Update user
+  const user = getUser(event.params.pid, event.params.user, event.block)
+  user.amount = BIG_INT_ZERO
+  user.rewardDebt = BIG_INT_ZERO
+
+  user.save()
+}
+
+// event NewTribePerBlock(uint256 indexed amount);
+export function handleNewTribePerBlock(event: NewTribePerBlock): void {
+  log.info('Set NewTribePerBlock: {}', [
+    event.params.amount.toString(),
+  ])
+  const tribalChief = getTribalChief(event.block)
+
+  tribalChief.tribePerBlock = event.params.amount
+
+  tribalChief.save()
 }

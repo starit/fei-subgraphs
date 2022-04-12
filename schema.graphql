@@ -4,7 +4,7 @@ type TribalChief @entity {
   id: ID!
 
   # Bonus multiplier
-  rewardMultiplier: BigInt!
+  # rewardMultiplier: BigInt!
 
   # Start block
   startBlock: BigInt!
@@ -53,19 +53,19 @@ type History @entity {
   # Owner (TribalChief, Pool, or User).
   owner: TribalChief!
 
-  # SLP Balance
+  # staked token Balance
   tokenBalance: BigDecimal!
 
-  # SLP Age
+  # staked token Age
   tokenAge: BigDecimal!
 
-  # SLP Removed
+  # staked token Removed
   tokenAgeRemoved: BigDecimal!
 
-  # SLP Deposited
+  # staked token Deposited
   tokenDeposited: BigDecimal!
 
-  # SLP Withdrawn
+  # staked token Withdrawn
   tokenWithdrawn: BigDecimal!
 
   # Timestamp
